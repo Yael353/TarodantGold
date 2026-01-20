@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BurgerMenu from "./BurgerMenu";
-import Links from "./Links";
 import Button from "../../ui/button/Button";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,25 +12,29 @@ export default function Navbar() {
       <nav className="bg-black/90 backdrop-blur-md border-b border-beige/10 h-20 flex items-center px-6 fixed top-0 left-0 right-0 z-50">
         <div className="flex justify-between items-center w-full mx-auto">
           {/* Logo - vänster */}
-          <div className="flex-1 flex justify-start">
-            <div className="group cursor-pointer">
-              <h1 className="text-gold font-heading text-2xl md:text-3xl tracking-widest font-light">
-                TARODANT
-              </h1>
-              <div className="flex items-center justify-center gap-1">
-                <div className="h-px w-6 bg-linear-to-r from-transparent to-gold"></div>
-                <span className="text-beige-dark/80 font-body text-xs tracking-widest font-light">
-                  GOLD
-                </span>
-                <div className="h-px w-6 bg-linear-to-l from-transparent to-gold"></div>
+          <Link to="/">
+            <div className="flex-1 flex justify-start">
+              <div className="group cursor-pointer">
+                <h1 className="text-gold font-heading text-2xl md:text-3xl tracking-widest font-light">
+                  TARODANT
+                </h1>
+                <div className="flex items-center justify-center gap-1">
+                  <div className="h-px w-6 bg-linear-to-r from-transparent to-gold"></div>
+                  <span className="text-beige-dark/80 font-body text-xs tracking-widest font-light">
+                    GOLD
+                  </span>
+                  <div className="h-px w-6 bg-linear-to-l from-transparent to-gold"></div>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Links */}
           <div className="hidden md:flex flex-1 justify-center">
             <div className="flex items-center gap-10">
-              <Links />
+              <Link to="/products" className="text-gray-300 hover:text-gold">
+                Products
+              </Link>
             </div>
           </div>
 

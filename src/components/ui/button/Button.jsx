@@ -1,4 +1,4 @@
-function Button() {
+function Button({ text = "Shop Now" }) {
   return (
     <button
       className="relative bg-gold-dark text-black font-heading font-semibold py-1 px-8 
@@ -10,7 +10,7 @@ function Button() {
                   active:shadow-[inset_0_0_2px_rgba(0,0,0,0.2)]
                   active:translate-y-1"
     >
-      Shop Now
+      {text}
     </button>
   );
 }

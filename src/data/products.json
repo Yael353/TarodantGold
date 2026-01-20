@@ -1,0 +1,144 @@
+{
+  "productsData": [
+    {
+      "id": 1,
+      "slug": "pure-argan-oil",
+      "name": "Pure Moroccan Argan Oil",
+      "description": "100% organic, cold-pressed argan oil sourced directly from Morocco. Rich in vitamin E and fatty acids for radiant skin and healthy hair.",
+      "shortDescription": "Premium organic argan oil from Morocco",
+      "price": 299,
+      "currency": "SEK",
+      "originalPrice": 349,
+      "category": "face-oils",
+      "subcategory": "premium-oils",
+      "tags": ["organic", "vegan", "anti-aging", "cold-pressed", "sustainable"],
+      "ingredients": ["100% Argania Spinosa Kernel Oil"],
+      "skinType": ["dry", "combination", "sensitive", "aging"],
+      "volume": "30ml",
+      "images": ["/images/argan.png"],
+      "features": [
+        "Reduces fine lines and wrinkles",
+        "Deeply moisturizes without greasy feel",
+        "Strengthens hair and reduces split ends",
+        "Improves skin elasticity"
+      ],
+      "benefits": [
+        "Antioxidant protection",
+        "Non-comedogenic",
+        "Quick absorption",
+        "Suitable for all skin types"
+      ],
+      "rating": 4.2,
+      "reviews": 124,
+      "inStock": true,
+      "isFeatured": true,
+      "isBestseller": true,
+      "stockLevel": 45
+    },
+    {
+      "id": 2,
+      "slug": "rosehip-face-oil",
+      "name": "Organic Rosehip Oil",
+      "description": "Cold-pressed rosehip oil rich in antioxidants and vitamin A for brightening and rejuvenating tired skin. Perfect for reducing dark spots and scars.",
+      "shortDescription": "Brightening and rejuvenating rosehip oil",
+      "price": 349,
+      "currency": "SEK",
+      "category": "face-oils",
+      "subcategory": "brightening-oils",
+      "tags": ["organic", "anti-aging", "brightening", "scar-treatment"],
+      "ingredients": ["Rosa Canina Fruit Oil", "Natural Vitamin E"],
+      "skinType": ["dry", "combination", "acne-prone", "scarred"],
+      "volume": "30ml",
+      "images": ["/images/rose.png"],
+      "features": [
+        "Brightens uneven skin tone",
+        "Reduces appearance of dark spots",
+        "Improves skin elasticity and firmness",
+        "Helps fade acne scars"
+      ],
+      "rating": 4.6,
+      "reviews": 89,
+      "inStock": true,
+      "isFeatured": false,
+      "isBestseller": true,
+      "stockLevel": 32
+    },
+    {
+      "id": 3,
+      "slug": "jojoba-oil",
+      "name": "Golden Jojoba Oil",
+      "description": "Versatile jojoba oil that closely resembles the skin's natural sebum. Perfect for balancing oil production and providing lightweight hydration.",
+      "shortDescription": "Balancing oil for all skin types",
+      "price": 249,
+      "currency": "SEK",
+      "category": "face-oils",
+      "subcategory": "balancing-oils",
+      "tags": ["organic", "non-comedogenic", "balancing", "lightweight"],
+      "ingredients": ["Simmondsia Chinensis Seed Oil"],
+      "skinType": ["oily", "combination", "acne-prone", "sensitive"],
+      "volume": "50ml",
+      "images": ["/images/argan.png"],
+      "features": [
+        "Balances natural oil production",
+        "Lightweight, non-greasy formula",
+        "Soothes irritated skin",
+        "Can be used as makeup remover"
+      ],
+      "rating": 4.7,
+      "reviews": 156,
+      "inStock": true,
+      "isFeatured": true,
+      "isBestseller": false,
+      "stockLevel": 67
+    },
+    {
+      "id": 4,
+      "slug": "virgin-coconut-oil",
+      "name": "Virgin Coconut Oil",
+      "description": "Cold-pressed virgin coconut oil with natural antimicrobial properties. Perfect for hair masks, body moisturizing, and cooking.",
+      "shortDescription": "Multi-purpose coconut oil for beauty and wellness",
+      "price": 199,
+      "currency": "SEK",
+      "originalPrice": 249,
+      "category": "multi-use",
+      "subcategory": "tropical-oils",
+      "tags": [
+        "organic",
+        "virgin",
+        "cold-pressed",
+        "multi-purpose",
+        "tropical"
+      ],
+      "ingredients": ["100% Cocos Nucifera Oil"],
+      "skinType": ["dry", "normal", "all"],
+      "hairType": ["dry", "damaged", "curly", "all"],
+      "volume": "200ml",
+      "images": ["/images/coconut.png"],
+      "uses": [
+        "Hair mask and conditioner",
+        "Body moisturizer",
+        "Makeup remover",
+        "Massage oil",
+        "Cooking oil"
+      ],
+      "features": [
+        "Natural antimicrobial properties",
+        "Deeply nourishes dry hair",
+        "Leaves skin soft and supple",
+        "Pleasant tropical scent"
+      ],
+      "benefits": [
+        "Rich in lauric acid",
+        "Food grade quality",
+        "Solid at room temperature",
+        "Sustainable sourcing"
+      ],
+      "rating": 4.5,
+      "reviews": 210,
+      "inStock": true,
+      "isFeatured": true,
+      "isBestseller": true,
+      "stockLevel": 120
+    }
+  ]
+}
