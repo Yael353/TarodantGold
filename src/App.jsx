@@ -11,8 +11,8 @@ function App() {
   return (
     <CartProvider>
       <div className="min-h-screen flex flex-col">
-        {/* <Navbar /> */}
-        <main className="grow">
+        <Navbar />
+        <main className="grow pt-20">
           <Routes>
             <Route
               path="/"

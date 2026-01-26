@@ -14,7 +14,8 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-black/90 backdrop-blur-md border-t border-beige/10">
-      {/* Bakgrundsbild med overlay */}
+      {/* Bakgrundsbild  */}
+
       <div className="absolute inset-0">
         <img
           src="/images/footer.png"
@@ -26,6 +27,7 @@ export default function Footer() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Logo sektion */}
+
         <div className="text-center mb-12">
           <div className="group cursor-pointer inline-block">
             <h1 className="text-gold font-heading text-3xl md:text-4xl tracking-widest font-light mb-2">
@@ -43,7 +45,7 @@ export default function Footer() {
 
         {/* Tre kolumner */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {/* Kolumn 1: Quick Links */}
+          {/* Kolumn 1 */}
           <div>
             <h3 className="text-gold font-heading text-lg font-semibold mb-6 pb-2 border-b border-gold/30">
               Quick Links
@@ -92,7 +94,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Kolumn 2: Customer Service */}
+          {/* Kolumn 2 */}
           <div>
             <h3 className="text-gold font-heading text-lg font-semibold mb-6 pb-2 border-b border-gold/30">
               Customer Service
@@ -111,19 +113,10 @@ export default function Footer() {
                 <span className="text-beige/80">Marrakech, Morocco</span>
               </li>
             </ul>
-            <div className="mt-6">
-              <h4 className="text-beige font-medium mb-3">Business Hours</h4>
-              <p className="text-beige/70 text-sm">
-                Mon-Fri: 9am - 6pm
-                <br />
-                Sat: 10am - 4pm
-                <br />
-                Sun: Closed
-              </p>
-            </div>
+            
           </div>
 
-          {/* Kolumn 3: Newsletter & Social */}
+          {/* Kolumn 3 */}
           <div>
             <h3 className="text-gold font-heading text-lg font-semibold mb-6 pb-2 border-b border-gold/30">
               Stay Connected
@@ -133,7 +126,7 @@ export default function Footer() {
               tips.
             </p>
 
-            {/* Newsletter form */}
+            {/* form */}
             <form className="mb-8">
               <div className="flex flex-col sm:flex-row gap-2">
                 <input
@@ -193,7 +186,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar med copyright */}
+        {/* copyright del */}
         <div className="pt-8 border-t border-gold/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-beige/60 text-sm">

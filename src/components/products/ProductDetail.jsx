@@ -1,287 +1,455 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  ShoppingBag,
+  Check,
+  Minus,
+  Plus,
+  Star,
+  Truck,
+  Shield,
+  RefreshCw,
+} from "lucide-react";
 import productsData from "../../data/products.json";
-import RelatedProducts from "../ui/RelatedProducts";
+import RelatedProducts from "../ui/productDetails/RelatedProducts";
+import Button from "../ui/button/Button";
+import { useCart } from "../../context/CartContext";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const { addToCart, isInCart } = useCart();
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     const foundProduct = productsData.productsData.find(
-      (p) => p.id.toString() === id
+      (p) => p.id.toString() === id,
     );
 
     setTimeout(() => {
       setProduct(foundProduct);
       setLoading(false);
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }, 300);
   }, [id]);
 
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product, quantity);
+      console.log("Added to Cart:", product.name, "x", quantity);
+    }
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-beige flex items-center justify-center">
-        <div className="text-xl text-gray-600">Loading...</div>
+      <div className="min-h-screen bg-gradient-to-b from-beige-light to-beige flex items-center justify-center">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          className="w-16 h-16 border-2 border-gold/30 border-t-gold rounded-full"
+        />
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-beige flex flex-col items-center justify-center">
-        <h1 className="text-2xl text-gray-700 mb-4">Product not found</h1>
-        <Link to="/" className="text-gold hover:underline">
-          ← Back to Home
-        </Link>
+      <div className="min-h-screen bg-gradient-to-b from-beige-light to-beige flex flex-col items-center justify-center p-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center"
+        >
+          <h1 className="text-4xl font-heading text-black font-light mb-6">
+            Product Not Found
+          </h1>
+          <p className="text-gray-dark font-body mb-8 max-w-md">
+            The product you're looking for doesn't exist or has been moved.
+          </p>
+          <Link to="/">
+            <Button
+              className="border border-gold/30 hover:border-gold"
+              text="Return Home"
+              icon={<ArrowLeft size={18} />}
+            />
+          </Link>
+        </motion.div>
       </div>
     );
   }
 
+  const isProductInCart = isInCart(product.id);
+
   return (
-    <div className="bg-beige top-20 min-h-screen p-8">
-      {/* Bild-sidan */}
-      <div className="container flex flex-col  mx-auto lg:flex-row">
-        <div className="flex-1 w-full h-[80vh] overflow-hidden">
-          <img
-            src={product.images[0]}
-            alt={product.name}
-            className="w-full h-full object-cover rounded-md"
-            style={{
-              objectPosition: "center 30%",
-            }}
-          />
+    <div className="bg-gradient-to-b from-beige-light to-beige min-h-screen pt-24 pb-32">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="container mx-auto px-4 sm:px-6 lg:px-8 mb-8"
+      >
+        <div className="flex items-center text-sm text-gray-dark font-body tracking-wide">
+          <Link
+            to="/"
+            className="hover:text-gold transition-colors duration-300"
+          >
+            Home
+          </Link>
+          <span className="mx-2">/</span>
+          <Link
+            to="/products"
+            className="hover:text-gold transition-colors duration-300"
+          >
+            Products
+          </Link>
+          <span className="mx-2">/</span>
+          <span className="text-gold">{product.name}</span>
         </div>
+      </motion.div>
 
-        {/* Detaljsidan */}
-        <div className="flex-1 lg:ml-8 flex-col justify-center items-center mt-8 lg:mt-0">
-          <div>
-            <h2 className="font-light text-5xl text-shadow-gray-dark">
-              {product.name}
-            </h2>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col lg:flex-row gap-12"
+        >
+          {/* Bildsektion  */}
+          <div className="lg:w-1/2">
+            {/* Huvudbild */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-beige-light/50 to-beige-light/20 border border-beige-dark/20 mb-6"
+            >
+              <div className="aspect-square md:aspect-[4/5] flex items-center justify-center p-8">
+                <motion.img
+                  key={selectedImage}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  src={product.images[selectedImage]}
+                  alt={product.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
 
-            <div className="border-b pb-6 mb-6"></div>
-
-            <h3 className="text-4xl font-light text-shadow-gray-dark font-heading">
-              {product.volume}
-            </h3>
-            <div className="border-b pb-6 mb-6"></div>
-
-            <div className="flex flex-col lg:flex-row gap-8 items-start">
-              {/* Vänster: Beskrivning och detaljer */}
-              <div className="lg:flex-1 space-y-6">
-                {/* Beskrivning */}
-                <div className="">
-                  <p className="text-gray-shadow-dark leading-relaxed font-body">
-                    {product.description}
-                  </p>
-                </div>
-
-                {/* Features och Benefits i grid */}
-                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
-                {/* Features */}
-                {product.features && product.features.length > 0 && (
-                  <div className="space-y-3">
-                    <h4 className="text-gray-600 font-light text-sm uppercase tracking-wide">
-                      Features
-                    </h4>
-                    <ul className="space-y-2">
-                      {product.features.slice(0, 3).map((feature, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <span className="text-gray-600 text-sm">
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+              {/* Badges */}
+              <div className="absolute top-4 left-4 flex flex-col gap-2">
+                {product.isNew && (
+                  <div className="bg-gradient-to-r from-gold to-gold-dark text-black text-sm font-bold px-4 py-2 rounded-full shadow-lg">
+                    NEW ARRIVAL
                   </div>
                 )}
+                {product.isEco && (
+                  <div className="bg-gradient-to-r from-green to-green-dark text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">
+                    ECO-FRIENDLY
+                  </div>
+                )}
+              </div>
+            </motion.div>
 
-                {/* Benefits */}
-                {/* {product.benefits && product.benefits.length > 0 && (
-                    <div className="space-y-3">
-                      <h4 className="text-gray-600 font-light text-sm uppercase tracking-wide">
-                        Benefits
-                      </h4>
-                      <ul className="space-y-2">
-                        {product.benefits.slice(0, 3).map((benefit, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="text-gold mt-1">•</span>
-                            <span className="text-gray-600 text-sm">
-                              {benefit}
-                            </span>
-                          </li>
+            {/* Thumbnail bilder */}
+            {product.images.length > 1 && (
+              <div className="flex gap-4 overflow-x-auto py-2 scrollbar-hide">
+                {product.images.map((img, index) => (
+                  <motion.button
+                    key={index}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSelectedImage(index)}
+                    className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                      selectedImage === index
+                        ? "border-gold shadow-lg"
+                        : "border-beige-dark/30 hover:border-gold/50"
+                    }`}
+                  >
+                    <img
+                      src={img}
+                      alt={`${product.name} view ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Detalj info  */}
+          <div className="lg:w-1/2">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="space-y-8"
+            >
+              {/* titel */}
+              <div>
+                <div className="mb-4">
+                  <span className="text-gray-dark font-body text-sm tracking-widest uppercase">
+                    {product.category || "Premium Skincare"}
+                  </span>
+                </div>
+                <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-black font-light tracking-tight leading-tight">
+                  {product.name}
+                </h1>
+                <p className="text-gray-dark font-body text-lg mt-4">
+                  {product.volume || "50ml"}
+                </p>
+              </div>
+
+              {/* betyg */}
+              <div className="flex flex-col items-center justify-between border-t border-b border-beige-dark/20 py-6">
+                <div className="flex items-center gap-4">
+                  {product.rating && (
+                    <>
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={20}
+                            className={`${
+                              i < Math.floor(product.rating)
+                                ? "text-gold fill-gold"
+                                : "text-gray-light"
+                            }`}
+                          />
                         ))}
-                      </ul>
-                    </div>
+                      </div>
+                      <span className="text-gray-dark font-body">
+                        {product.rating} • {product.reviews || 24} reviews
+                      </span>
+                    </>
                   )}
-                </div> */}
+                </div>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {product.tags &&
-                    product.tags.map((tag, index) => (
+                {/* Pris */}
+                <div className="text-right">
+                  {product.originalPrice &&
+                  product.originalPrice > product.price ? (
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-2xl text-gray-dark line-through font-body">
+                        {product.currency || "$"}
+                        {product.originalPrice.toFixed(2)}
+                      </span>
+                      <span className="text-4xl font-heading text-gold-dark font-light">
+                        {product.currency || "$"}
+                        {product.price.toFixed(2)}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-4xl font-heading text-gold-dark font-light">
+                      {product.currency || "$"}
+                      {product.price.toFixed(2)}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Beskrivning */}
+              <div className="space-y-4">
+                <h3 className="font-heading text-xl text-black font-light">
+                  Description
+                </h3>
+                <p className="text-gray-dark font-body leading-relaxed">
+                  {product.description ||
+                    "Premium quality product with exceptional benefits."}
+                </p>
+              </div>
+
+              {/* Features */}
+              {product.features && product.features.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="font-heading text-xl text-black font-light">
+                    Key Benefits
+                  </h3>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {product.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-full bg-green-soft flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <div className="w-2 h-2 rounded-full bg-green" />
+                        </div>
+                        <span className="text-gray-dark font-body">
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Taggar */}
+              {product.tags && product.tags.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="font-heading text-xl text-black font-light">
+                    Ingredients & Properties
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {product.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 bg-beige/20 text-gray-700 rounded-full text-xs font-light"
+                        className="px-4 py-2 bg-beige-dark/20 text-gray-dark rounded-full text-sm font-body hover:bg-beige-dark/30 transition-colors duration-300"
                       >
                         {tag}
                       </span>
                     ))}
-                </div>
-              </div>
-
-              {/* Höger: Pris och volume */}
-              <div className="lg:w-1/3 flex flex-col items-center lg:items-end space-y-4">
-                {/* Pris-box med elegant design */}
-                <div className="bg-linear-to-br from-beige-dark to-beige/10 p-6 rounded-xl border border-beige/40 min-w-50 text-center">
-                  {/* Originalpris om rabatt */}
-                  {product.originalPrice &&
-                    product.originalPrice > product.price && (
-                      <div className="mb-2">
-                        <span className="text-gray-400 line-through text-sm">
-                          {product.currency} {product.originalPrice}
-                        </span>
-                        <div className="text-xs text-gold mt-1">
-                          Save {product.currency}{" "}
-                          {product.originalPrice - product.price}
-                        </div>
-                      </div>
-                    )}
-
-                  {/* Huvudpris */}
-                  <div className="text-5xl font-serif font-light text-gray-900 mb-1">
-                    {product.price}
-                  </div>
-
-                  {/* Valuta och volume */}
-                  <div className="text-gray-500 text-sm font-light">
-                    {product.currency} • {product.volume}
-                  </div>
-
-                  {/* Stock status */}
-                  <div
-                    className={`mt-3 text-sm px-3 py-1 rounded-full ${
-                      product.inStock
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    {product.inStock ? "In Stock" : "Out of Stock"}
                   </div>
                 </div>
+              )}
 
-                {/* Rating */}
-                {product.rating && (
-                  <div className="flex items-center gap-2">
-                    <div className="flex text-gold">
-                      {"★".repeat(Math.floor(product.rating))}
-                      {"☆".repeat(5 - Math.floor(product.rating))}
+              {/* kundvagn*/}
+              <div className="space-y-6 pt-8 border-t border-beige-dark/20">
+                <div className="flex flex-col sm:flex-row gap-6">
+                  <div className="flex-1 max-w-xs">
+                    <div className="mb-2">
+                      <label className="text-gray-dark font-body text-sm tracking-widest">
+                        QUANTITY
+                      </label>
                     </div>
-                    <span className="text-gray-600 text-sm">
-                      {product.rating} ({product.reviews} reviews)
+                    <div className="flex items-center border border-beige-dark/30 rounded-lg overflow-hidden">
+                      <button
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="w-12 h-12 flex items-center justify-center text-gray-dark hover:text-gold hover:bg-beige-dark/10 transition-all duration-300"
+                      >
+                        <Minus size={20} />
+                      </button>
+                      <div className="flex-1 text-center py-3">
+                        <span className="text-2xl font-heading text-black">
+                          {quantity}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="w-12 h-12 flex items-center justify-center text-gray-dark hover:text-gold hover:bg-beige-dark/10 transition-all duration-300"
+                      >
+                        <Plus size={20} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Lägg till i kundvagn */}
+                  <div className="flex-1">
+                    <div className="mb-2">
+                      <label className="text-gray-dark font-body text-sm tracking-widest">
+                        {isProductInCart ? "IN CART" : "ADD TO CART"}
+                      </label>
+                    </div>
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.02 }}
+                      onClick={handleAddToCart}
+                      disabled={!product.inStock}
+                      className={`w-full py-4 rounded-lg flex items-center justify-center gap-3 font-body text-lg tracking-widest transition-all duration-300 ${
+                        isProductInCart
+                          ? "bg-green-dark text-white hover:bg-green"
+                          : product.inStock
+                            ? "bg-black text-pearl hover:bg-gold hover:text-black"
+                            : "bg-gray text-gray-dark cursor-not-allowed"
+                      }`}
+                    >
+                      {isProductInCart ? (
+                        <>
+                          <Check size={22} />
+                          ADDED TO CART
+                        </>
+                      ) : product.inStock ? (
+                        <>
+                          <ShoppingBag size={22} />
+                          ADD TO CART • {quantity}
+                        </>
+                      ) : (
+                        "OUT OF STOCK"
+                      )}
+                    </motion.button>
+                  </div>
+                </div>
+
+                {/* Tillgänglighet*/}
+                <div className="flex items-center justify-between text-sm">
+                  <div
+                    className={`flex items-center gap-2 ${product.inStock ? "text-green-dark" : "text-red-500"}`}
+                  >
+                    <div
+                      className={`w-2 h-2 rounded-full ${product.inStock ? "bg-green-dark" : "bg-red-500"}`}
+                    />
+                    {product.inStock
+                      ? "In Stock • Ready to ship"
+                      : "Out of Stock"}
+                  </div>
+                  <div className="text-gray-dark">
+                    Total:{" "}
+                    <span className="text-gold-dark font-bold text-lg ml-1">
+                      {product.currency || "$"}
+                      {(product.price * quantity).toFixed(2)}
                     </span>
                   </div>
-                )}
-              </div>
-            </div>
-
-            <div className="w-10 h-px bg-linear-to-r from-beige/30 to-transparent mx-auto mt-4"></div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            {/* Vänster: Quantity input - elegant design */}
-            <div className="flex-1 flex items-center justify-between bg-white border border-gray-300 rounded-lg overflow-hidden shadow-sm">
-              <button
-                className="w-12 h-12 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors border-r border-gray-300"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                aria-label="Decrease quantity"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M20 12H4"
-                  />
-                </svg>
-              </button>
-
-              <div className="flex-1 text-center px-4">
-                <span className="text-lg font-medium text-gray-900">
-                  {quantity}
-                </span>
-                <div className="text-xs text-gray-500 mt-1">Quantity</div>
+                </div>
               </div>
 
-              <button
-                className="w-12 h-12 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors border-l border-gray-300"
-                onClick={() => setQuantity(quantity + 1)}
-                aria-label="Increase quantity"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            {/* Höger: Add to Cart knapp - med ikon */}
-            <button className="flex-1 bg-linear-to-r from-gold to-gold-dark text-black font-bold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-              Add to Cart • {quantity}
-            </button>
+              {/* Trust badges */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-beige-dark/20">
+                <div className="text-center">
+                  <Truck className="w-8 h-8 text-gold mx-auto mb-2" />
+                  <p className="text-xs text-gray-dark font-body">
+                    Free Shipping
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Shield className="w-8 h-8 text-gold mx-auto mb-2" />
+                  <p className="text-xs text-gray-dark font-body">
+                    Secure Payment
+                  </p>
+                </div>
+                <div className="text-center">
+                  <RefreshCw className="w-8 h-8 text-gold mx-auto mb-2" />
+                  <p className="text-xs text-gray-dark font-body">
+                    30-Day Return
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-8 h-8 rounded-full bg-green-soft flex items-center justify-center mx-auto mb-2">
+                    <div className="w-4 h-4 text-green">✓</div>
+                  </div>
+                  <p className="text-xs text-gray-dark font-body">
+                    100% Organic
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      </div>
-      <div className="py-4"><RelatedProducts currentProductId={product.id} /></div>
-      <div className="mt-8">
-        <Link
-          to="/products"
-          className="inline-flex items-center text-gold hover:text-gold-dark font-medium"
+        </motion.div>
+
+        {/* Related Products */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-24"
         >
-          <svg
-            className="w-4 h-4 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          <RelatedProducts currentProductId={product.id} />
+        </motion.div>
+
+        {/* Back to products */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-16 text-center"
+        >
+          <Link to="/products">
+            <Button
+              className="border border-gold/30 hover:border-gold"
+              text="Back to Collection"
+              icon={<ArrowLeft size={18} />}
             />
-          </svg>
-          Back to Products
-        </Link>
+          </Link>
+        </motion.div>
       </div>
     </div>
   );

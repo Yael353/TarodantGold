@@ -1,4 +1,3 @@
-// context/CartContext.jsx
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 export const CartContext = createContext();
@@ -6,43 +5,43 @@ export const CartContext = createContext();
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    console.error("❌ useCart måste användas inom CartProvider");
+    console.error("useCart måste användas inom CartProvider");
     throw new Error("useCart måste användas inom CartProvider");
   }
   return context;
 };
 
 export const CartProvider = ({ children }) => {
-  // ⭐ LAZY INITIAL STATE - Lösning för StrictMode ⭐
+  // LAZY INITIAL STATE - Lösning för StrictMode
   const [cart, setCart] = useState(() => {
-    console.log("⭐ useState initializer körs");
+    console.log("useState initializer körs");
 
     try {
       const savedCart = localStorage.getItem("tarodant-cart");
-      console.log("⭐ localStorage värde:", savedCart);
+      console.log("localStorage värde:", savedCart);
 
       if (savedCart) {
         const parsed = JSON.parse(savedCart);
-        console.log("⭐ Laddade initial cart från localStorage:", parsed);
+        console.log("Laddade initial cart från localStorage:", parsed);
         return parsed;
       }
     } catch (error) {
-      console.error("⭐ Error parsing cart från localStorage:", error);
+      console.error("Error parsing cart från localStorage:", error);
       // Rensa ogiltig data
       localStorage.removeItem("tarodant-cart");
     }
 
-    console.log("⭐ Ingen cart hittad, returnerar tom array");
+    console.log("Ingen cart hittad, returnerar tom array");
     return [];
   });
 
-  // ⭐ Spara automatiskt när cart ändras
+  // Spara automatiskt när cart ändras
   useEffect(() => {
     console.log("💾 useEffect: Cart ändrad, sparar till localStorage:", cart);
     localStorage.setItem("tarodant-cart", JSON.stringify(cart));
   }, [cart]);
 
-  // ⭐ Lägg till produkt i kundvagnen
+  // Lägg till produkt i kundvagnen
   const addToCart = (product, quantity = 1) => {
     console.log(
       "🛒 addToCart kallad för:",
@@ -65,7 +64,7 @@ export const CartProvider = ({ children }) => {
       let newCart;
 
       if (existingIndex >= 0) {
-        // ⭐ Uppdatera befintlig produkt
+        // Uppdatera befintlig produkt
         newCart = [...prevCart];
         newCart[existingIndex] = {
           ...newCart[existingIndex],
@@ -73,13 +72,13 @@ export const CartProvider = ({ children }) => {
         };
         console.log("🛒 Uppdaterade befintlig produkt. Ny cart:", newCart);
       } else {
-        // ⭐ Lägg till ny produkt
+        // Lägg till ny produkt
         newCart = [
           ...prevCart,
           {
             ...product,
             quantity,
-            // ⭐ Se till att vi har alla nödvändiga fält
+            //Se till att vi har alla nödvändiga fält
             id: product.id,
             name: product.name,
             price: product.price,
@@ -123,43 +122,43 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // ⭐ Rensa hela kundvagnen
+  // Rensa hela kundvagnen
   const clearCart = () => {
     console.log("🧹 clearCart");
     setCart([]);
   };
 
-  // ⭐ Beräkna totalt antal varor
+  // Beräkna totalt antal varor
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
-  // ⭐ Beräkna totalpris
+  // Beräkna totalpris
   const totalPrice = cart.reduce(
     (total, item) => total + (item.price || 0) * item.quantity,
     0
   );
 
-  // ⭐ Kolla om en produkt finns i kundvagnen
+  // Kolla om en produkt finns i kundvagnen
   const isInCart = (productId) => {
     const exists = cart.some((item) => item.id === productId);
     console.log("🔍 isInCart:", productId, "->", exists);
     return exists;
   };
 
-  // ⭐ Skapa ett cart-objekt med produkt-ID som nyckel (för snabb lookup)
+  // Skapa ett cart-objekt med produkt-ID som nyckel (för snabb lookup)
   const cartItemsMap = cart.reduce((map, item) => {
     map[item.id] = item;
     return map;
   }, {});
 
   const value = {
-    cart, // Array med alla produkter
-    cartItemsMap, // Objekt för snabb lookup {id: product}
+    cart, 
+    cartItemsMap, 
     addToCart,
     removeFromCart,
     updateQuantity,
     clearCart,
-    totalItems, // Totalt antal varor
-    totalPrice, // Totalt pris
+    totalItems, 
+    totalPrice, 
     isInCart,
   };
 
