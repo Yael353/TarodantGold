@@ -1,10 +1,5 @@
-
 function AboutUs() {
-  return (
-    <div>
-      Hej från About Us komponenten!
-    </div>
-  )
+  return <div>Hej från About Us komponenten!</div>;
 }
 
-export default AboutUs
+export default AboutUs;

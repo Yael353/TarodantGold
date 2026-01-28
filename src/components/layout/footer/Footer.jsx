@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FaFacebook,
   FaTwitter,
@@ -31,7 +30,7 @@ export default function Footer() {
         <div className="text-center mb-12">
           <div className="group cursor-pointer inline-block">
             <h1 className="text-gold font-heading text-3xl md:text-4xl tracking-widest font-light mb-2">
-              TARODANT
+              TAROUDANT
             </h1>
             <div className="flex items-center justify-center gap-2">
               <div className="h-px w-8 bg-linear-to-r from-transparent to-gold"></div>
@@ -102,18 +101,17 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <FaEnvelope className="text-gold mt-1 shrink-0" />
-                <span className="text-beige/80">support@tarodant.com</span>
+                <span className="text-beige/80">info@taroudantgold.com</span>
               </li>
               <li className="flex items-start gap-3">
                 <FaPhone className="text-gold mt-1 shrink-0" />
-                <span className="text-beige/80">+1 (555) 123-4567</span>
+                <span className="text-beige/80">+46 72 000 000</span>
               </li>
               <li className="flex items-start gap-3">
                 <FaMapMarkerAlt className="text-gold mt-1 shrink-0" />
-                <span className="text-beige/80">Marrakech, Morocco</span>
+                <span className="text-beige/80">Stockholm, Sweden</span>
               </li>
             </ul>
-            
           </div>
 
           {/* Kolumn 3 */}
@@ -175,7 +173,7 @@ export default function Footer() {
                   <FaInstagram size={18} />
                 </a>
                 <a
-                  href="mailto:support@tarodant.com"
+                  href="mailto:info@taroudantgold.com"
                   className="w-10 h-10 rounded-full bg-black/40 border border-gold/20 flex items-center justify-center text-gold hover:bg-gold/20 hover:scale-110 transition-all"
                   aria-label="Email"
                 >

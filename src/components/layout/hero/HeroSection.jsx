@@ -32,8 +32,8 @@ export default function HeroSection() {
               transition={{ delay: 0.2 }}
               className="mb-12"
             >
-              <span className=" text-gold font-heading text-4xl md:text-5xl tracking-[0.2em] font-light">
-                TARODANT GOLD
+              <span className=" text-gold uppercase font-heading text-4xl md:text-5xl tracking-[0.2em] font-light">
+                Taroudant GOLD
               </span>
             </motion.div>
 
@@ -91,6 +91,7 @@ export default function HeroSection() {
             >
               <Link to="/products">
                 <Button
+                  variant="secondary"
                   className="px-12 py-4 text-lg group overflow-hidden relative bg-black hover:bg-gold text-pearl hover:text-black border border-gold/30"
                   text="Discover Collection"
                 >

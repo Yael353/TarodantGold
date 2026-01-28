@@ -49,7 +49,7 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-beige-light to-beige flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-b from-beige-light to-beige flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -61,7 +61,7 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-beige-light to-beige flex flex-col items-center justify-center p-8">
+      <div className="min-h-screen bg-linear-to-b from-beige-light to-beige flex flex-col items-center justify-center p-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -88,7 +88,7 @@ export default function ProductDetail() {
   const isProductInCart = isInCart(product.id);
 
   return (
-    <div className="bg-gradient-to-b from-beige-light to-beige min-h-screen pt-24 pb-32">
+    <div className="bg-linear-to-b from-beige-light to-beige min-h-screen pt-24 pb-32">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -126,9 +126,9 @@ export default function ProductDetail() {
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
-              className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-beige-light/50 to-beige-light/20 border border-beige-dark/20 mb-6"
+              className="relative rounded-3xl overflow-hidden bg-linear-to-br from-beige-light/50 to-beige-light/20 border border-beige-dark/20 mb-6"
             >
-              <div className="aspect-square md:aspect-[4/5] flex items-center justify-center p-8">
+              <div className="aspect-square md:aspect-4/5 flex items-center justify-center p-8">
                 <motion.img
                   key={selectedImage}
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -143,12 +143,12 @@ export default function ProductDetail() {
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2">
                 {product.isNew && (
-                  <div className="bg-gradient-to-r from-gold to-gold-dark text-black text-sm font-bold px-4 py-2 rounded-full shadow-lg">
+                  <div className="bg-linear-to-r from-gold to-gold-dark text-black text-sm font-bold px-4 py-2 rounded-full shadow-lg">
                     NEW ARRIVAL
                   </div>
                 )}
                 {product.isEco && (
-                  <div className="bg-gradient-to-r from-green to-green-dark text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">
+                  <div className="bg-linear-to-r from-green to-green-dark text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">
                     ECO-FRIENDLY
                   </div>
                 )}
@@ -164,7 +164,7 @@ export default function ProductDetail() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setSelectedImage(index)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                    className={`shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
                       selectedImage === index
                         ? "border-gold shadow-lg"
                         : "border-beige-dark/30 hover:border-gold/50"
@@ -272,7 +272,7 @@ export default function ProductDetail() {
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {product.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-green-soft flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <div className="w-6 h-6 rounded-full bg-green-soft flex items-center justify-center shrink-0 mt-0.5">
                           <div className="w-2 h-2 rounded-full bg-green" />
                         </div>
                         <span className="text-gray-dark font-body">

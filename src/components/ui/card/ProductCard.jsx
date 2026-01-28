@@ -42,7 +42,7 @@ export default function ProductList() {
                   {/* Overlay med info på hover */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
                     <div className="p-6 text-pearl">
-                      <p className="text-sm font-body tracking-wide">
+                      <p className="text-sm font-heading tracking-wide">
                         {product.shortDescription}
                       </p>
                     </div>
@@ -122,7 +122,8 @@ export default function ProductList() {
                       to={`/product/${product.id}`}
                       className="flex-1 border border-gray hover:border-gold hover:text-gold-dark text-black py-3 text-center text-sm tracking-widest font-body rounded-sm transition-all duration-300"
                     >
-                      LEARN MORE
+                      LEARN <br />
+                      MORE
                     </Link>
                   </div>
                 </div>

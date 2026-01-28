@@ -3,11 +3,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import BurgerMenu from "./BurgerMenu";
 import Button from "../../ui/button/Button";
 import { Link, useLocation } from "react-router-dom";
+import { ShoppingBasket } from "lucide-react";
+import { useCart } from "../../../context/CartContext";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  const { totalItems } = useCart();
 
   // Scroll effekt
   useEffect(() => {
@@ -28,7 +32,7 @@ export default function Navbar() {
     { path: "/products", label: "Products" },
     { path: "/about", label: "About Us" },
     { path: "/contact", label: "Contact" },
-    { path: "/shop", label: "Shop" },
+    { path: "/cart", label: "Cart" },
   ];
 
   return (
@@ -38,7 +42,7 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500  ${
           isScrolled
             ? "bg-black/95 backdrop-blur-xl border-b border-gold/10 py-3"
             : "bg-black/90 backdrop-blur-md border-b border-beige/10 py-5"
@@ -50,7 +54,7 @@ export default function Navbar() {
             <Link to="/" className="flex-1 flex justify-start">
               <motion.div className="group cursor-pointer">
                 <h1 className="text-gold font-heading text-2xl md:text-3xl tracking-widest font-light">
-                  TARODANT
+                  TAROUDANT
                 </h1>
                 <div className="flex items-center justify-center gap-1">
                   <motion.div
@@ -133,11 +137,23 @@ export default function Navbar() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
+                className="flex "
               >
                 <Button
                   className="border border-gold/30 hover:border-gold/60 hover:bg-gold/5 transition-all duration-300"
                   text="Discover"
                 />
+                <Link to="/cart" className="relative px-4 py-2">
+                  <ShoppingBasket
+                    size={40}
+                    className="text-beige hover:text-gold"
+                  />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-2 -right-2 w-10 h-5 bg-gold text-black text-xs rounded-full flex items-center justify-center font-bold">
+                      {totalItems}
+                    </span>
+                  )}
+                </Link>
               </motion.div>
             </div>
 
@@ -172,7 +188,7 @@ export default function Navbar() {
               onClick={() => setIsMenuOpen(false)}
             />
 
-            {/* Menu Panel */}
+            {/* Meny Panel */}
             <motion.div
               initial={{ scaleY: 0, transformOrigin: "top" }}
               animate={{ scaleY: 1 }}
